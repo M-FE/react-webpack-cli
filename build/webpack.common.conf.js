@@ -1,28 +1,23 @@
-const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { resolve } = require('./utils');
 
-const resolve = p => path.resolve(__dirname, p);
+const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
     entry: {
-        app: resolve('./src/main.js')
+        app: resolve('../src/main.js')
     },
 
     output: {
         filename: '[name].bundle.js',
-        path: resolve('./dist')
+        path: resolve('../dist')
     },
-
-    mode: 'production',
     
     resolve: {
         extensions: ['.js', '.jsx', '.json']
     },
 
     module: {
-        /* 优化构建速度 */
-        noParse: /lodash|jquery/,
         rules: [
             {
                 test: /\.jsx?$/,
@@ -30,10 +25,6 @@ module.exports = {
                 use: 'babel-loader'
             }
         ]
-    },
-
-    devServer: {
-        port: 9003
     },
 
     optimization: {
@@ -45,6 +36,13 @@ module.exports = {
                     chunks: 'initial',
                     minChunks: 1,
                     priority: 10
+                },
+                common: {
+                    name: 'common',
+                    test: /[\\\/]src[\\\/]/,
+                    chunks: 'all',
+                    minChunks: 2,
+                    priority: 5
                 }
             }
         }
@@ -52,14 +50,10 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            template: resolve('./template.ejs'),
+            template: resolve('../template.ejs'),
             templateParameters: {
-                dllScript: '<script src="../dll/react.dll.js"></script>'
+                dllScript: isDev ? '<script src="../dll/verdor.dll.js"></script>' : ''
             }
-        }),
-        /* 优化构建速度 */
-        new webpack.DllReferencePlugin({
-            manifest: require(resolve('./dll/react.manifest.json'))
         })
     ]
 };
