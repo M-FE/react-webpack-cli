@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App';
 
 new Promise((resolve) => {resolve(1)});
 
@@ -14,4 +15,4 @@ function sleep(timer) {
     console.log('Sleep 3000ms');
 })();
 
-ReactDOM.render(<div>Hello</div>, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

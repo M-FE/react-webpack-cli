@@ -1,0 +1,11 @@
+$background: green;
+$color: #fff;
+
+body {
+    background-color: $background;
+    color: $color;
+
+    div {
+        font-size: 20px;
+    }
+}

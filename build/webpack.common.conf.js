@@ -1,7 +1,18 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { resolve } = require('./utils');
 
 const isDev = process.env.NODE_ENV === 'development';
+
+const cssLoaders = [
+    {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+            hmr: isDev
+        }
+    },
+    'css-loader'
+];
 
 module.exports = {
     entry: {
@@ -9,8 +20,9 @@ module.exports = {
     },
 
     output: {
-        filename: '[name].bundle.js',
-        path: resolve('../dist')
+        filename: '[name].[contentHash].bundle.js',
+        path: resolve('../dist'),
+        chunkFilename: '[name].[contentHash].chunk.js'
     },
     
     resolve: {
@@ -23,6 +35,14 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: 'babel-loader'
+            },
+            {
+                test: /\.css$/,
+                use: [...cssLoaders]
+            },
+            {
+                test: /\.s(c|a)ss$/,
+                use: [...cssLoaders, 'sass-loader']
             }
         ]
     },
@@ -54,6 +74,10 @@ module.exports = {
             templateParameters: {
                 dllScript: isDev ? '<script src="../dll/verdor.dll.js"></script>' : ''
             }
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contentHash].css',
+            chunkFilename: '[id].[contentHash].css'
         })
     ]
 };

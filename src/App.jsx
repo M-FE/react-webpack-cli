@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import _ from 'lodash';
 
-const App = () => {
-    const name = _.join(['willem', 'wei', ' ']);
+const AsyncComponent = lazy(() => import('./AsyncComponent'));
 
-    return (<div>Hello React</div>);
+import './index.scss';
+
+const App = () => {
+    const name = _.join(['Hello', 'World', ' ']);
+
+    return (<div>
+        { name }
+        <Suspense fallback={<div>Loading...</div>}>
+            <AsyncComponent />
+        </Suspense>
+    </div>);
 }
 
 export default App;

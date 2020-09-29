@@ -6,6 +6,8 @@ const { resolve } = require('./utils');
 module.exports = merge(baseConfig, {
     mode: 'development',
 
+    devtool: '#eval-source-map',
+
     module: {
         /* 优化构建速度 */
         noParse: /lodash|jquery/
