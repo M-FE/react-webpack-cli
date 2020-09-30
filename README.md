@@ -20,4 +20,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 ## Configured List
 
 - Babel
-- SCSS/SASS/CSS
+- scss/sass/css
+- eslint
+- typescript

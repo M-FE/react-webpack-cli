@@ -10,7 +10,23 @@ module.exports = merge(baseConfig, {
 
     module: {
         /* 优化构建速度 */
-        noParse: /lodash|jquery/
+        noParse: /lodash|jquery/,
+        rules: [
+            {
+                test: /\.(j|t)sx?/,
+                exclude: /node_modules/,
+                enforce: 'pre',
+                use: [
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            cache: true,
+                            fix: true
+                        }
+                    }
+                ]
+            }
+        ]
     },
 
     devServer: {

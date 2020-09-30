@@ -16,7 +16,7 @@ const cssLoaders = [
 
 module.exports = {
     entry: {
-        app: resolve('../src/main.js')
+        app: resolve('../src/main.tsx')
     },
 
     output: {
@@ -26,7 +26,7 @@ module.exports = {
     },
     
     resolve: {
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
     },
 
     module: {
@@ -35,6 +35,11 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: 'babel-loader'
+            },
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: 'ts-loader'
             },
             {
                 test: /\.css$/,
